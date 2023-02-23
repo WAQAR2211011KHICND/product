@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -14,12 +13,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.hamcrest.CoreMatchers.is;
 import com.example.product.Entity.Product;
 import com.example.product.Repository.ProductRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 
 @WebMvcTest
@@ -68,9 +64,7 @@ public class ProductControllerTests {
         
         List<Product> products = List.of(cut,cut2);
         given(productRepository.findAll()).willReturn(products);
-
         ResultActions response = mockMvc.perform(get("/product/all"));
-
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(products.size())));
     }
